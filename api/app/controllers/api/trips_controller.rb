@@ -44,5 +44,9 @@ module API
     def trip_params
       params.require(:trip).permit(:user_id, :destination, :start_date, :end_date, :comment)
     end
+
+    def resource_serializer(_)
+      TripSerializer
+    end
   end
 end

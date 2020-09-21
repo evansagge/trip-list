@@ -1,35 +1,28 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
 #
-#  id                     :uuid             not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  id              :uuid             not null, primary key
+#  email           :string           not null
+#  password_digest :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
+  api_guard_associations refresh_token: 'refresh_tokens', blacklisted_token: 'blacklisted_tokens'
 
-  def jwt_payload
+  has_secure_password
+
+  has_many :refresh_tokens, dependent: :delete_all
+  has_many :blacklisted_tokens, dependent: :delete_all
+
+  validates :email, uniqueness: true
+
+  def jwt_token_payload
     { email: email }
-  end
-
-  def on_jwt_dispatch(_token, _payload)
-    JwtDenylist.where('exp < ?', Date.today).destroy_all
   end
 end

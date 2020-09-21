@@ -1,0 +1,15 @@
+inherit_from: ../.rubocop.yml
+
+inherit_gem:
+  rubocop-sensible:
+    - "config/rubocop.yml"
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'test/**/*.rb'
+    - 'spec/**/*_spec.rb'
+
+Style/Documentation:
+  Enabled: false
