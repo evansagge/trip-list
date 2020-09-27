@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    true
   end
 
   def show?
-    false
+    update?
   end
 
   def create?
-    false
+    true
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    user.admin? || user.id == record.user_id
   end
 
   def edit?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    update?
   end
 
   class Scope
@@ -43,7 +43,11 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope.all
+      if user.admin?
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 end

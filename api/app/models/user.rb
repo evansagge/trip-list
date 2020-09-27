@@ -30,4 +30,12 @@ class User < ApplicationRecord
   def jwt_token_payload
     { email: email }
   end
+
+  def admin?
+    role == 'admin'
+  end
+
+  def manager?
+    role == 'manager'
+  end
 end

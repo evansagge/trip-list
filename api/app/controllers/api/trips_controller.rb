@@ -6,7 +6,7 @@ module API
 
     # GET /trips
     def index
-      trips = current_user.trips
+      trips = policy_scope(Trip)
 
       render_resource(trips)
     end

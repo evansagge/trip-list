@@ -32,11 +32,25 @@ RSpec.describe "/api/trips", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns only Trips created by current user" do
-      subject
-      expect(json['data'].size).to eq(2)
-      expect(json['data'].map { |data| data['id'] }).to contain_exactly(trip_a.id, trip_b.id)
-      expect(json['data'].map { |data| data['id'] }).to_not include(other_trip.id) 
+    context 'and current user is not an admin' do
+      it "returns only Trips created by current user" do
+        subject
+        expect(json['data'].size).to eq(2)
+        expect(json['data'].map { |data| data['id'] }).to contain_exactly(trip_a.id, trip_b.id)
+        expect(json['data'].map { |data| data['id'] }).to_not include(other_trip.id) 
+      end
+    end
+
+    context 'and current user is an admin' do
+      before { user.update!(role: :admin) }
+
+      it "returns all trips" do
+        subject
+        expect(json['data'].size).to eq(3)
+        expect(json['data'].map { |data| data['id'] }).to contain_exactly(
+          trip_a.id, trip_b.id, other_trip.id
+        )
+      end
     end
   end
 
@@ -95,11 +109,33 @@ RSpec.describe "/api/trips", type: :request do
     end
 
     context 'if Trip was created by another user' do
-      let!(:trip) { create(:trip) }
-      
-      it "renders forbidden response" do
-        subject
-        expect(response).to have_http_status(:forbidden)
+      context 'and current user is a regular user' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is a manager' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is an admin' do
+        before { user.update!(role: :admin) }
+
+        let!(:trip) { create(:trip) }
+        
+        it "renders success response" do
+          subject
+          expect(response).to have_http_status(:success)
+        end
       end
     end
   end
@@ -137,11 +173,33 @@ RSpec.describe "/api/trips", type: :request do
     end
 
     context 'if Trip was created by another user' do
-      let!(:trip) { create(:trip) }
-      
-      it "renders forbidden response" do
-        subject
-        expect(response).to have_http_status(:forbidden)
+      context 'and current user is a regular user' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is a manager' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is an admin' do
+        before { user.update!(role: :admin) }
+
+        let!(:trip) { create(:trip) }
+        
+        it "renders success response" do
+          subject
+          expect(response).to have_http_status(:success)
+        end
       end
     end
   end
@@ -158,11 +216,33 @@ RSpec.describe "/api/trips", type: :request do
     end
 
     context 'if Trip was created by another user' do
-      let!(:trip) { create(:trip) }
-      
-      it "renders forbidden response" do
-        subject
-        expect(response).to have_http_status(:forbidden)
+      context 'and current user is a regular user' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is a manager' do
+        let!(:trip) { create(:trip) }
+        
+        it "renders forbidden response" do
+          subject
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'and current user is an admin' do
+        before { user.update!(role: :admin) }
+
+        let!(:trip) { create(:trip) }
+        
+        it "renders success response" do
+          subject
+          expect(response).to have_http_status(:success)
+        end
       end
     end
   end
