@@ -12,4 +12,5 @@ end
 
 RSpec.configure do |config|
   config.include JsonAPIHelpers, type: :request
+  config.include ApiGuard::Test::ControllerHelper
 end
