@@ -6,7 +6,7 @@ module APIResponse
   included do
     rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
     rescue_from ActiveModel::ValidationError, with: :handle_validation_error
-    rescue_from ActionPolicy::Unauthorized, with: :handle_unauthorized_error
+    rescue_from Pundit::NotAuthorizedError, with: :handle_unauthorized_error
   end
 
   protected

@@ -2,7 +2,7 @@
 
 module API
   class ApplicationController < ::ApplicationController
+    include Pundit
     before_action :authenticate_and_set_user
-    authorize :user, through: :current_user
   end
 end

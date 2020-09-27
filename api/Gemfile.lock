@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    action_policy (0.4.4)
     actioncable (6.0.3.3)
       actionpack (= 6.0.3.3)
       nio4r (~> 2.0)
@@ -133,6 +132,8 @@ GEM
       pry (>= 0.10.4)
     puma (4.3.6)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
@@ -227,7 +228,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  action_policy
   annotate
   api_guard
   bcrypt (~> 3.1.7)
@@ -247,6 +247,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 4.1)
+  pundit
   rack-cors
   rails (~> 6.0.3, >= 6.0.3.2)
   rspec-rails

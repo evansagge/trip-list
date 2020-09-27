@@ -7,7 +7,7 @@
 #  id              :uuid             not null, primary key
 #  email           :string           not null
 #  password_digest :string           not null
-#  roles           :string           is an Array
+#  role            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -20,5 +20,13 @@ FactoryBot.define do
     sequence(:email) { |n| "user-#{n}@example.com" }
     password { 'Pass1234!'}
     password_confirmation { 'Pass1234!'}
+    
+    factory :manager do
+      role { 'manager' }
+    end
+
+    factory :admin do
+      role { 'admin' }
+    end
   end
 end

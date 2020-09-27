@@ -39,7 +39,7 @@ module API
     private
 
     def authorize_trip
-      authorize!(trip)
+      authorize(trip)
     end
 
     def trip
