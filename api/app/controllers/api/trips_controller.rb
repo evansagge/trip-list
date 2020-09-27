@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module API
   class TripsController < API::ApplicationController
+    before_action :authorize_trip, only: [:show, :update, :destroy]
+
     # GET /trips
     def index
       trips = current_user.trips
@@ -33,6 +37,10 @@ module API
     end
 
     private
+
+    def authorize_trip
+      authorize!(trip)
+    end
 
     def trip
       @trip ||= Trip.find(params[:id])

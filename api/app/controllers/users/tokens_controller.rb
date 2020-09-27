@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class TokensController < ApiGuard::TokensController
     before_action :authenticate_resource, only: [:create]

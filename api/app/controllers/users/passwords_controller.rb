@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class PasswordsController < ApiGuard::PasswordsController
     before_action :authenticate_resource, only: [:update]
