@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
   has_many :trips
 
-  validates :email, uniqueness: true
+  validates :email, presence: true, email: true, uniqueness: true
 
   def jwt_token_payload
     { email: email }
