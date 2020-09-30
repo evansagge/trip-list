@@ -8,7 +8,7 @@ import {
   Typography 
 } from '@material-ui/core';
 
-import { normalize, denormalize } from 'lib/jsonApi';
+import { denormalize } from 'lib/jsonApi';
 import { 
   fetchResources, 
   addResource, 
@@ -18,72 +18,20 @@ import {
 import LoadingBackdrop from 'shared/components/LoadingBackdrop';
 import TripList from 'pages/Trips/components/TripList';
 import TripFormDrawer from 'pages/Trips/components/TripFormDrawer';
+import { Resources } from 'pages/Resources';
 
-class Trips extends React.Component {
-  constructor(props) {
-    super();
-    this.state = { trip: {}, isFormOpen: false };
-
-    this.handeNewItem = this.handeNewItem.bind(this);
-    this.handleEditItem = this.handleEditItem.bind(this);
-    this.handleUpsertItem = this.handleUpsertItem.bind(this);
-    this.handleDeleteItem = this.handleDeleteItem.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
-  }
+class Trips extends Resources {
+  resourceName = 'trip';
 
   loadData() {
     this.props.fetchResources('trips');
-  }
-
-  componentDidMount() {
-    if (this.props.isAuthenticated) {
-      this.loadData();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.isAuthenticated && this.props.isAuthenticated) {
-      this.loadData();
-    }
-  }
-
-  handeNewItem() {
-    this.setState({ trip: {}, isFormOpen: true });
-  }
-
-  handleEditItem(trip) {
-    this.setState({ trip: trip, isFormOpen: true });
-  }
-
-  async handleUpsertItem(trip) {
-    const payload = normalize({ ...trip, type: 'trips' });
-
-    if (trip.id) {
-      await this.props.updateResource(payload);
-    } else {
-      await this.props.addResource(payload);
-    }
-
-    const status = this.props.status.trips || {};
-    if (!status.pending && status.error == null) {
-      this.setState({ trip: {}, isFormOpen: false });
-    } else {
-      alert(status.error)
-    }
-  }
-
-  handleDeleteItem(trip) {
-    this.props.deleteResource(normalize(trip));
-  }
-
-  toggleForm() {
-    this.setState({ isFormOpen: !this.state.isFormOpen });
   }
 
   render() {
     if (!this.props.isLoaded) {
       return <LoadingBackdrop />;
     }
+
     return (
       <div>
         <Grid container spacing={3}>
@@ -109,23 +57,16 @@ class Trips extends React.Component {
           onCancel={this.toggleForm} 
           onSubmit={this.handleUpsertItem}
         />
+
+        {this.alerts}
       </div>
     );
   }
 }
 
-Trips.defaultProps = {
-  companies: [],
-  trips: [],
-  tripStatuses: [],
-  status: {
-    trips: { pending: false, error: null }
-  }
-}
-
 const mapStateToProps = ({ auth: { isAuthenticated }, resources: { data, status } }) => {
   const trips = denormalize(data, 'trips') || [];
-  const isLoaded = status.trips && !status.trips?.loading;
+  const isLoaded = !status.loading;
 
   return { isAuthenticated, trips, isLoaded }
 }

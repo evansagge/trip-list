@@ -20,5 +20,5 @@ class UserSerializer
 
   set_type :users
 
-  attributes :id, :email, :created_at
+  attributes :id, :email, :role, :created_at
 end

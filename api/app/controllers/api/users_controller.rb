@@ -52,7 +52,7 @@ module API
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:user_id, :email, :password)
+      params.from_jsonapi.require(:user).permit(:email, :password)
     end
 
     def resource_serializer(_)

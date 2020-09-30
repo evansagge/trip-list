@@ -35,7 +35,7 @@ export const fetchResources = (resourceType) => {
     return axios.get(`/api/${resourceType}`)
       .then(handleErrors)
       .then(res => dispatch({ ...action, type: FETCH_RESOURCES_SUCCESS, payload: normalize(res.data) }))
-      .catch(error => dispatch({ ...action, type: FETCH_RESOURCES_FAILURE, error: error }));
+      .catch(error => dispatch({ ...action, type: FETCH_RESOURCES_FAILURE, errors: error?.response?.data?.errors || error }));
   };
 }
 
@@ -48,7 +48,7 @@ export const fetchResource = (resourceType, resourceId) => {
     return axios.get(`/api/${resourceType}/${resourceId}`)
       .then(handleErrors)
       .then(res => dispatch({ ...action, type: FETCH_RESOURCES_SUCCESS, payload: normalize(res.data) }))
-      .catch(error => dispatch({ ...action, type: FETCH_RESOURCES_FAILURE, error: error }));
+      .catch(error => dispatch({ ...action, type: FETCH_RESOURCES_FAILURE, errors: error?.response?.data?.errors || error }));
   };
 }
 
@@ -62,7 +62,7 @@ export const addResource = (resource) => {
     return axios.post(`/api/${resourceType}`, snakeCaseKeys(resource))
       .then(handleErrors)
       .then(res => dispatch({ ...action, type: ADD_RESOURCE_SUCCESS, payload: normalize(res.data) }))
-      .catch(error => dispatch({ ...action, type: ADD_RESOURCE_FAILURE, error: error }));
+      .catch(error => dispatch({ ...action, type: ADD_RESOURCE_FAILURE, errors: error?.response?.data?.errors || error }));
   };
 }
 
@@ -77,7 +77,7 @@ export const updateResource = (resource) => {
     return axios.patch(`/api/${resourceType}/${resourceId}`, snakeCaseKeys(resource))
       .then(handleErrors)
       .then(res => dispatch({ ...action, type: UPDATE_RESOURCE_SUCCESS, payload: normalize(res.data) }))
-      .catch(error => dispatch({ ...action, type: UPDATE_RESOURCE_FAILURE, error: error }));
+      .catch(error => dispatch({ ...action, type: UPDATE_RESOURCE_FAILURE, errors: error?.response?.data?.errors || error }));
   };
 }
 
@@ -92,6 +92,6 @@ export const deleteResource = (resource) => {
     return axios.delete(`/api/${resourceType}/${resourceId}`)
       .then(handleErrors)
       .then(res => dispatch({ ...action, type: DELETE_RESOURCE_SUCCESS }))
-      .catch(error => dispatch({ ...action, type: DELETE_RESOURCE_FAILURE, error: error }));
+      .catch(error => dispatch({ ...action, type: DELETE_RESOURCE_FAILURE, errors: error?.response?.data?.errors || error }));
   }
 }

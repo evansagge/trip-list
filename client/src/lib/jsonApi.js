@@ -19,6 +19,18 @@ const resourceTransformer = {
     const includes = []
 
     return { payload, includes };
+  },
+  'users': (item) => {
+    const payload = {
+      type: 'users',
+      id: item.id,
+      email: item.email,
+      password: item.password,
+      passwordConfirmation: item.passwordConfirmation
+    };
+    const includes = []
+
+    return { payload, includes };
   }
 }
 

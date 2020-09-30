@@ -36,10 +36,8 @@ const resources = (state = initialState, action) => {
         state,
         {
           status: {
-            [action.resourceType]: {
-              loading: true,
-              error: null
-            }
+            loading: true,
+            errors: null
           }
         }
       )
@@ -50,10 +48,8 @@ const resources = (state = initialState, action) => {
         {
           data: action.payload,
           status: {
-            [action.resourceType]: {
-              loading: false,
-              error: null
-            }
+            loading: false,
+            errors: null
           }
         }
       )
@@ -63,10 +59,8 @@ const resources = (state = initialState, action) => {
         state,
         {
           status: {
-            [action.resourceType]: {
-              loading: false,
-              error: action.error
-            }
+            loading: false,
+            errors: action.errors
           }
         }
       )
@@ -77,10 +71,8 @@ const resources = (state = initialState, action) => {
         state,
         {
           status: {
-            [action.resourceType]: {
-              pending: true,
-              error: null
-            }
+            pending: true,
+            errors: null
           }
         }
       )
@@ -93,10 +85,8 @@ const resources = (state = initialState, action) => {
         {
           data: action.payload,
           status: {
-            [action.resourceType]: {
-              pending: false,
-              error: null
-            }
+            pending: false,
+            errors: null
           }
         }
       )
@@ -108,10 +98,8 @@ const resources = (state = initialState, action) => {
         state,
         {
           status: {
-            [action.resourceType]: {
-              pending: false,
-              error: action.error
-            }
+            pending: false,
+            errors: action.errors
           }
         }
       )
@@ -125,10 +113,8 @@ const resources = (state = initialState, action) => {
         {
           data: action.payload,
           status: {
-            [action.resourceType]: {
-              deleting: true,
-              error: null
-            }
+            deleting: true,
+            errors: null
           }
         }
       )
@@ -141,10 +127,8 @@ const resources = (state = initialState, action) => {
         newState,
         {
           status: {
-            [action.resourceType]: {
-              deleting: false,
-              error: null
-            }
+            deleting: false,
+            errors: null
           }
         }
       )
@@ -158,10 +142,8 @@ const resources = (state = initialState, action) => {
         {
           data: action.payload,
           status: {
-            [action.resourceType]: {
-              deleting: false,
-              error: action.error
-            }
+            deleting: false,
+            errors: action.errors
           }
         }
       )
