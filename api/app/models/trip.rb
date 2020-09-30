@@ -5,7 +5,7 @@
 # Table name: trips
 #
 #  id          :uuid             not null, primary key
-#  comment     :text
+#  comments    :text
 #  destination :string           not null
 #  end_date    :date             not null
 #  start_date  :date             not null

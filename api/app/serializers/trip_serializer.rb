@@ -5,7 +5,7 @@
 # Table name: trips
 #
 #  id          :uuid             not null, primary key
-#  comment     :text
+#  comments    :text
 #  destination :string           not null
 #  end_date    :date             not null
 #  start_date  :date             not null
@@ -24,7 +24,9 @@
 class TripSerializer
   include FastJsonapi::ObjectSerializer
 
-  belongs_to :user
+  set_type :trips
 
-  attributes :destination, :start_date, :end_date, :comment
+  belongs_to :user, record_type: :users, serializer: UserSerializer
+
+  attributes :destination, :start_date, :end_date, :comments
 end

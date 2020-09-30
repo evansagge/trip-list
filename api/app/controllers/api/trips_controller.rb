@@ -48,7 +48,7 @@ module API
 
     # Only allow a trusted parameter "white list" through.
     def trip_params
-      params.require(:trip).permit(:user_id, :destination, :start_date, :end_date, :comment)
+      params.from_jsonapi.require(:trip).permit(:user_id, :destination, :start_date, :end_date, :comments)
     end
 
     def resource_serializer(_)

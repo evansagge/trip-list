@@ -11,7 +11,7 @@ module Users
       @refresh_token.destroy
       blacklist_token if ApiGuard.blacklist_token_after_refreshing
     
-      render_success(message: I18n.t('api_guard.access_token.refreshed'))
+      render_resource(current_resource)
     end
 
     private

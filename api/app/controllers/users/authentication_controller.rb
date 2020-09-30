@@ -2,13 +2,19 @@
 
 module Users
   class AuthenticationController < ApiGuard::AuthenticationController
+    include APIResponse
+
     before_action :find_resource, only: [:create]
-    before_action :authenticate_resource, only: [:destroy]
+    before_action :authenticate_and_set_user, only: [:show, :destroy]
+
+    def show
+      render_resource(current_user)
+    end
 
     def create
       if resource.authenticate(sign_in_params[:password])
         create_token_and_set_header(resource, resource_name)
-        render_success(message: I18n.t('api_guard.authentication.signed_in'))
+        render_resource(resource)
       else
         render_error(422, message: I18n.t('api_guard.authentication.invalid_login_credentials'))
       end

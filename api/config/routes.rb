@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     tokens: 'users/tokens'
   }
 
+  get '/users', to: 'users/authentication#show'
+
   namespace :api do
     resources :trips
     resources :users
