@@ -3,13 +3,22 @@
 require 'rails_helper'
 
 RSpec.describe "/api/users", type: :request do
-
   let(:valid_attributes) {
-    attributes_for(:user)
+    { 
+      data: {
+        type: 'users',
+        attributes: attributes_for(:user)
+      }
+    }
   }
 
   let(:invalid_attributes) {
-     { email: 'invalid-email' }
+    { 
+      data: {
+        type: 'users',
+        attributes: { email: 'invalid-email' }
+      }
+    }
   }
 
   describe "GET /api/users" do
@@ -47,7 +56,7 @@ RSpec.describe "/api/users", type: :request do
   end
 
   describe "POST /create" do
-    subject { post '/api/users', params: { user: user_parameters },  headers: auth_headers,  as: :json }
+    subject { post '/api/users', params: user_parameters,  headers: auth_headers,  as: :json }
     
     let(:user_parameters) { valid_attributes }
 
@@ -128,11 +137,11 @@ RSpec.describe "/api/users", type: :request do
   end
 
   describe "PATCH /update" do
-    subject { patch "/api/users/#{user.id}", params: { user: user_parameters }, headers: auth_headers, as: :json }
+    subject { patch "/api/users/#{user.id}", params: user_parameters, headers: auth_headers, as: :json }
 
     let!(:user) { create(:user) }
 
-    let(:user_parameters) { { email: 'a-different-email@example.com' } }
+    let(:user_parameters) { { data: { type: 'users', attributes: { email: 'a-different-email@example.com' } } } }
 
     shared_examples 'authorized user' do
       context "with valid parameters" do

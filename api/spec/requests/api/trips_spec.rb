@@ -4,11 +4,23 @@ require 'rails_helper'
 
 RSpec.describe "/api/trips", type: :request do
   let(:valid_attributes) {
-    attributes_for(:trip)
+    { 
+      data: {
+        type: 'trips',
+        attributes: attributes_for(:trip)
+      }
+    }
   }
 
   let(:invalid_attributes) {
-    { destination: nil }
+    { 
+      data: {
+        type: 'trips',
+        attributes: {
+          destination: nil
+        }
+      }
+    }
   }
 
   describe "GET /api/trips" do
@@ -55,7 +67,7 @@ RSpec.describe "/api/trips", type: :request do
     context "with valid parameters" do
       subject do
         post '/api/trips',
-             params: { trip: valid_attributes }, 
+             params: valid_attributes, 
              headers: auth_headers, 
              as: :json
       end
@@ -76,7 +88,7 @@ RSpec.describe "/api/trips", type: :request do
     context "with invalid parameters" do
       subject do
         post '/api/trips',
-             params: { trip: invalid_attributes }, 
+             params: invalid_attributes, 
              headers: auth_headers, 
              as: :json
       end
@@ -130,7 +142,7 @@ RSpec.describe "/api/trips", type: :request do
   describe "PATCH /update" do
     subject { patch "/api/trips/#{trip.id}", params: parameters, headers: auth_headers, as: :json }
 
-    let(:parameters) { { trip: { destination: 'Osaka, JP' } } }
+    let(:parameters) { { data: { type: 'trips', attributes: { destination: 'Osaka, JP' } } } }
 
     shared_examples 'authorized user' do
       context "with valid parameters" do
@@ -146,7 +158,7 @@ RSpec.describe "/api/trips", type: :request do
       end
 
       context "with invalid parameters" do
-        let(:parameters) { { trip: invalid_attributes } }
+        let(:parameters) { invalid_attributes }
 
         it "renders a JSON response with errors for the trip" do
           subject
