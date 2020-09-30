@@ -12,7 +12,6 @@ import {
   Edit as EditIcon,
   Error as ErrorIcon
 } from '@material-ui/icons';
-import moment from 'moment';
 
 const UserItem = ({ user, onDelete, onEdit }) => {
   const handleDelete = () => onDelete(user);

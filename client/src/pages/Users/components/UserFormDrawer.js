@@ -7,7 +7,6 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -36,11 +35,7 @@ const UserFormDrawer = ({ user, isOpen, onSubmit, onCancel }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({
-      ...attributes,
-      startDate: moment(attributes.startDate).format("YYYY-MM-DD"),
-      endDate: moment(attributes.endDate).format("YYYY-MM-DD"),
-    });
+    onSubmit(attributes)
   }
 
   const handleCancel = (event) => {
@@ -92,8 +87,6 @@ const UserFormDrawer = ({ user, isOpen, onSubmit, onCancel }) => {
 }
 
 UserFormDrawer.defaultProps = {
-  companies: [],
-  userStatuses: [],
   user: {},
   isOpen: false
 }

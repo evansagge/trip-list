@@ -6,10 +6,7 @@ import {
   Divider,
   Grid, 
   Typography,
-  Snackbar
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import toArray from 'lodash/toArray';
 
 import { denormalize } from 'lib/jsonApi';
 import { 

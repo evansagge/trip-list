@@ -27,11 +27,6 @@ const useStyles = makeStyles(theme => ({
 const TripFormDrawer = ({ trip, isOpen, onSubmit, onCancel }) => {
   const classes = useStyles();
 
-  // const [id, setId] = useState();
-  // const [destination, setDestination] = useState();
-  // const [startDate, setStartDate] = useState();
-  // const [endDate, setEndDate] = useState();
-  // const [comments, setComments] = useState();
   const [attributes, setAttributes] = useState({})
 
   React.useEffect(() => { 
@@ -120,8 +115,6 @@ const TripFormDrawer = ({ trip, isOpen, onSubmit, onCancel }) => {
 }
 
 TripFormDrawer.defaultProps = {
-  companies: [],
-  tripStatuses: [],
   trip: {},
   isOpen: false
 }
