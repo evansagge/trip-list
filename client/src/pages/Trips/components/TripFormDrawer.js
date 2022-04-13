@@ -61,7 +61,7 @@ const TripFormDrawer = ({ trip, isOpen, onSubmit, onCancel }) => {
       <form onSubmit={handleSubmit} noValidate className={classes.form}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant='h5'>{trip.id ? 'Edit' : 'Add'} Job Application</Typography>
+            <Typography variant='h5'>{trip.id ? 'Edit' : 'Add'} Trip</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
